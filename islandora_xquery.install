@@ -160,8 +160,8 @@ function islandora_xquery_schema() {
       ),
       'redirect' => array(
         'description' => 'Where to go when the process is finished.',
-        'type' => 'varchar',
-        'length' => 255,
+        'type' => 'text',
+        'size' => 'medium',
         'not null' => TRUE,
       ),
     ),
