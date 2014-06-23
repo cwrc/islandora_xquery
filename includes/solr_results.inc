@@ -430,18 +430,23 @@ function islandora_xquery_run_query_batch_operation_generate_diff($object, $data
   // Apply an identity transform on the datastream to have saxon parse it and
   // clean it up a little so the diffs don't get crazy with entity escaping.
   $datastream->getContent($tmp_ds_path);
-  $options = new Islandora\Zorba\Options(array(
-    'context-item' => $tmp_ds_path,
-    'output-file' => $tmp_clean_ds_path,
-    'query' => array(
-      drupal_get_path('module', 'islandora_xquery') . '/queries/identity.xq',
-    ),
-  ));
+  //$options = new Islandora\Zorba\Options(array(
+    //'context-item' => $tmp_ds_path,
+    //'output-file' => $tmp_clean_ds_path,
+    //'query' => array(
+      //drupal_get_path('module', 'islandora_xquery') . '/queries/identity.xq',
+    //),
+  //));
 
-  Islandora\Zorba\execute($options);
+  //Islandora\Zorba\execute($options);
 
   // Now execute the query the user wants.
   file_put_contents($tmp_query_path, $xquery);
+
+
+  $tmp_clean_ds_file = $tmp_ds_file;
+  $tmp_clean_ds_path = $tmp_ds_path;
+
 
   $options = new Islandora\Zorba\Options(array(
     'context-item' => $tmp_clean_ds_path,
@@ -449,7 +454,8 @@ function islandora_xquery_run_query_batch_operation_generate_diff($object, $data
     'query' => array(
       $tmp_query_path,
     ),
-  ));
+));
+
 
   Islandora\Zorba\execute($options);
 
