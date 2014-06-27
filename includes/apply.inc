@@ -155,10 +155,17 @@ function islandora_xquery_apply_query_batch_apply_diff($result, &$context) {
   $diff = $result->diff;
 
   $old = $datastream->getContent();
-  $new = xdiff_string_patch($old, $diff);
+
+  $errors = "";
+  $new = xdiff_string_patch($old, $diff, XDIFF_PATCH_NORMAL, $errors);
+
+  // 2014-06-26 temporary error checking
+  if (strlen($errors)) {
+    watchdog("xdiff_string_patch::errors xquery apply.inc",$errors);
+  }
 
   // Exit early if patch fails.
-  if (!$new) {
+  if (!$new || strlen($errors)!=0 ) {
     islandora_xquery_apply_query_batch_update_progress($result, ISLANDORA_XQUERY_STATUS_PATCH_FAIL, $context);
     return;
   }
