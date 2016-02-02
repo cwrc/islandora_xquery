@@ -19,6 +19,16 @@ function islandora_xquery_cancel_results($batch_id) {
     ->execute()
     ->fetchField();
 
+  $result = db_select('islandora_xquery_diffs', 'diffs')
+    ->fields('diffs', array('pid'))
+    ->condition('batch_id', $batch_id)
+    ->execute();
+
+  module_load_include('inc', 'islandora_object_lock', 'includes/utilities');
+  foreach ($result as $record) {
+    islandora_object_lock_remove_object_lock($record->pid);
+  }
+
   // Clear out the db.
   db_delete('islandora_xquery_diffs')
     ->condition('batch_id', $batch_id, '=')
