@@ -94,7 +94,11 @@ function islandora_xquery_apply_query_batch_operation($batch_id, array &$context
     $include = TRUE;
     $fedora_object = islandora_object_load($result->pid);
     $locked = islandora_object_lock_is_locked($fedora_object);
-    $lock_owner = islandora_object_lock_get_lock_username($fedora_object);
+    if ($locked) {
+      $lock_owner = islandora_object_lock_get_lock_username($fedora_object);
+    } else {
+      $lock_owner = null;
+    }
     $created_date = strtotime($fedora_object[$result->dsid]->createdDate);
     if ($locked && $lock_owner != $user->name) {
       $ignored_objects[] = $result->pid;

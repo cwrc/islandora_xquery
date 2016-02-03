@@ -295,10 +295,13 @@ function islandora_xquery_run_query_batch_operation(array $dsids, $object_range,
 
   // Lock the object
   module_load_include('inc', 'islandora_object_lock', 'includes/utilities');
-  islandora_object_lock_set_object_lock($current_object->id);
-
+  $locked = islandora_object_lock_is_locked($current_object);
   foreach ($current_object as $datastream) {
     if (array_intersect($dsids, array($datastream->id))) {
+      if (!$locked) {
+        islandora_object_lock_set_object_lock($current_object->id);
+        $locked = true;
+      }
       islandora_xquery_run_query_batch_operation_generate_diff($current_object, $datastream, $xquery, $context);
     }
   }
