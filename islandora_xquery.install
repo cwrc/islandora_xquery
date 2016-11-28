@@ -188,15 +188,16 @@ function islandora_xquery_requirements($phase) {
       if ($zorba_version === FALSE) {
         $requirements['zorba'] = array(
           'title' => $t('Zorba'),
-          'value' => $t('Zorba could not be found. Islandora XQuery requires Zorba %version.', array('%version' => ISLANDORA_XQUERY_ZORBA_REQUIRED_VERSION)),
+          'value' => $t('Zorba could not be found. Islandora XQuery requires Zorba %version.', array('%version' => ISLANDORA_XQUERY_ZORBA_MINIMUM_VERSION)),
           'severity' => REQUIREMENT_ERROR,
         );
       }
-      elseif (version_compare($zorba_version, ISLANDORA_XQUERY_ZORBA_REQUIRED_VERSION, '!=')) {
+      elseif (version_compare($zorba_version, ISLANDORA_XQUERY_ZORBA_MINIMUM_VERSION, '<=')
+        && version_compare($zorba_version, ISLANDORA_XQUERY_ZORBA_MAXIMUM_VERSION, '>')) {
         $requirements['zorba'] = array(
           'title' => $t('Zorba'),
           'value' => $t('Islandora XQuery requires Zorba %required_version. Version %version is currently installed.', array(
-            '%required_version' => ISLANDORA_XQUERY_ZORBA_REQUIRED_VERSION,
+            '%required_version' => ISLANDORA_XQUERY_ZORBA_MINIMUM_VERSION,
             '%version' => $zorba_version,
             )
           ),

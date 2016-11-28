@@ -37,7 +37,8 @@ class XQueryUnitTestCase extends DrupalUnitTestCase {
    */
   public function testXQueryExistence() {
     $version = islandora_xquery_get_zorba_version();
-    if ($version === FALSE || version_compare(ISLANDORA_XQUERY_ZORBA_REQUIRED_VERSION, $version, '!=')) {
+    if ($version === FALSE || version_compare(ISLANDORA_XQUERY_ZORBA_MINIMUM_VERSION, $version, '<=')
+      && version_compare($zorba_version, ISLANDORA_XQUERY_ZORBA_MAXIMUM_VERSION, '>')) {
       $this->fail('Valid version of Zorba was not found.');
       return;
     }
