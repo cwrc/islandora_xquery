@@ -44,7 +44,7 @@ function islandora_xquery_admin_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Zorba'),
     '#description' => t('Zorba is used to execute XQuery queries.<br/>!msg', array(
-      '!msg' => islandora_executable_available_message($zorba, $version, ISLANDORA_XQUERY_ZORBA_REQUIRED_VERSION))
+      '!msg' => islandora_executable_available_message($zorba, $version, ISLANDORA_XQUERY_ZORBA_MINIMUM_VERSION))
     ),
     '#default_value' => $zorba,
     '#ajax' => array(

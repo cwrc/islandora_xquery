@@ -7,7 +7,8 @@
  *   Handle "the i18n_string integration fun".
  */
 
-define('ISLANDORA_XQUERY_ZORBA_REQUIRED_VERSION', '3.0.0');
+define('ISLANDORA_XQUERY_ZORBA_MINIMUM_VERSION', '3');
+define('ISLANDORA_XQUERY_ZORBA_MAXIMUM_VERSION', '4');
 define('ISLANDORA_XQUERY_ZORBA_DEFAULT_LOCATION', '/usr/bin/zorba');
 
 define('ISLANDORA_XQUERY_STATUS_PENDING', 'PENDING');
